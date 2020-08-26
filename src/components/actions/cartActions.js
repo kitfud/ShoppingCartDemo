@@ -1,4 +1,4 @@
-import {ADD_TO_CART} from './action-types/cart-actions'
+import {ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING} from './action-types/cart-actions'
 //this is the same as what I have done previuosly with 'action creators'
 
 export const addToCart= (id)=>{
@@ -6,3 +6,26 @@ export const addToCart= (id)=>{
         type: ADD_TO_CART,
          id }
     }
+
+    //remove item action
+export const removeItem=(id)=>{
+    return{
+        type: REMOVE_ITEM,
+        id
+    }
+}
+//subtract qt action
+export const subtractQuantity=(id)=>{
+    return{
+        type: SUB_QUANTITY,
+        id
+    }
+}
+//add qt action
+export const addQuantity=(id)=>{
+    return{
+        type: ADD_QUANTITY,
+        id
+    }
+}
+

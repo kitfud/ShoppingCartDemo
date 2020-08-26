@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import {removeItem, addQuantity, subtractQuantity} from './actions/cartActions'
+import Recipe from './Recipe'
 
 const mapStateToProps = (state)=>{
     return{
@@ -9,8 +10,29 @@ const mapStateToProps = (state)=>{
     }
 }
 
-class Cart extends Component{
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        removeItem: (id)=>{dispatch(removeItem(id))},
+        addQuantity: (id)=>{dispatch(addQuantity(id))},
+        subtractQuantity: (id)=>{dispatch(subtractQuantity(id))}
+    }
+}
 
+
+
+class Cart extends Component{
+ //to remove the item completely
+handleRemove = (id)=>{
+    this.props.removeItem(id);
+}
+//to add the quantity
+handleAddQuantity = (id)=>{
+    this.props.addQuantity(id);
+}
+//to substruct from the quantity
+handleSubtractQuantity = (id)=>{
+    this.props.subtractQuantity(id);
+}
     render(){
               
         let addedItems = this.props.items.length ?
@@ -31,10 +53,10 @@ class Cart extends Component{
                                             <b>Quantity: {item.quantity}</b> 
                                         </p>
                                         <div className="add-remove">
-                                            <Link to="/cart"><i className="material-icons">arrow_drop_up</i></Link>
-                                            <Link to="/cart"><i className="material-icons">arrow_drop_down</i></Link>
+                                            <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i></Link>
+                                            <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i></Link>
                                         </div>
-                                        <button className="waves-effect waves-light btn pink remove">Remove</button>
+                                        <button className="waves-effect waves-light btn pink remove" onClick={()=>{this.handleRemove(item.id)}}>Remove</button>
                                     </div>
                                     
                                </li>                        
@@ -52,7 +74,8 @@ class Cart extends Component{
                     <ul className="collection">
                         {addedItems}
                     </ul>
-                </div>  
+                </div> 
+                <Recipe />     
             </div>
        )
     }
@@ -60,4 +83,4 @@ class Cart extends Component{
 
 
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps,mapDispatchToProps)(Cart)
