@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-
+import Navbar from './components/Navbar'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
- 
+    <Navbar/>
     </div>
+    </BrowserRouter>
   );
 }
 
