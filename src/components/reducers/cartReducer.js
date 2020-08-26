@@ -1,3 +1,5 @@
+import { ADD_TO_CART} from '../actions/action-types/cart-actions'
+
 import Item1 from '../images/micro1.jpg'
 import Item2 from '../images/micro2.jpg'
 import Item3 from '../images/micro3.jpeg'
@@ -21,7 +23,34 @@ const initState = {
 }
 const cartReducer= (state = initState,action)=>{
     
-    return state;
-
+      //INSIDE HOME COMPONENT
+      if(action.type === ADD_TO_CART){
+        let addedItem = state.items.find(item=> item.id === action.id)
+        //check if the action id exists in the addedItems
+       let existed_item= state.addedItems.find(item=> action.id === item.id)
+       if(existed_item)
+       {
+          addedItem.quantity += 1 
+           return{
+              ...state,
+               total: state.total + addedItem.price 
+                }
+      }
+       else{
+          addedItem.quantity = 1;
+          //calculating the total
+          let newTotal = state.total + addedItem.price 
+          
+          return{
+              ...state,
+              addedItems: [...state.addedItems, addedItem],
+              total : newTotal
+          }
+          
+      }
+  }
+  else{
+      return state
+  }
 }
 export default cartReducer;
